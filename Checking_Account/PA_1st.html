@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checking Account</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 500px;
+            background: white;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0A0A66;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #0A0A66;
+            display: block;
+            margin-top: 15px;
+            text-align: left;
+            margin-left: 18px;
+        }
+
+        select, input {
+            width: 95%;
+            padding: 10px;
+            border: 2px solid #0A0A66;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 2px solid;
+            cursor: pointer;
+            border-radius: 20px;
+            width: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-next { border-color: orange; color: orange; background: white; }
+        .btn-next:hover { background: orange; color: white; }
+
+        .btn-back { border-color: blue; color: blue; background: white; }
+        .btn-back:hover { background: blue; color: white; }
+
+        #businessSection, #employeeSection { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container" id="personalSection">
+        <h2>Personal Information</h2>
+        <form id="personalForm">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+            <label for="age">Age:</label>
+            <input type="number" id="age" required>
+            <label for="address">Address:</label>
+            <input type="text" id="address" required>
+            <label for="sex">Sex:</label>
+            <input type="text" id="sex" required>
+            <label for="maritalStatus">Marital Status:</label>
+            <select id="maritalStatus" required>
+                <option value="">Select</option>
+                <option value="Single">Single</option>
+                <option value="Widow">Widow</option>
+                <option value="Separated">Separated</option>
+                <option value="Married">Married</option>
+            </select>
+            <label for="incomeSource">Source of Income:</label>
+            <select id="incomeSource" required onchange="toggleIncomeSection()">
+                <option value="">Select</option>
+                <option value="Business">Business</option>
+                <option value="Employee">Employee</option>
+            </select>
+            
+        </form>
+    </div>
+
+    <div class="container" id="businessSection">
+        <h2>Business Information</h2>
+        <form id="businessForm">
+            <label for="businessName">Business Name:</label>
+            <input type="text" id="businessName" required>
+            <label for="businessAddress">Business Address:</label>
+            <input type="text" id="businessAddress" required>
+            <div class="buttons">
+                <button type="button" class="btn btn-back" onclick="showPersonalSection()">Back</button>
+                <button type="submit" class="btn btn-next" onclick="bussnext()">Next</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="container" id="employeeSection">
+        <h2>Employer Information</h2>
+        <form id="employeeForm">
+            <label for="employeeName">Employer Name:</label>
+            <input type="text" id="employeeName" required>
+            <label for="employeeAddress">Employer Address:</label>
+            <input type="text" id="employeeAddress" required>
+            <div class="buttons">
+                <button type="button" class="btn btn-back" onclick="showPersonalSection()">Back</button>
+                <button type="submit" class="btn btn-next" onclick="emplonext()">Next</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+
+        function emplonext(){
+            window.location.href = "PA_employ.html";
+        }
+        function bussnext(){
+            window.location.href = "PA_buss.html";
+        }
+        function toggleIncomeSection() {
+            let incomeSource = document.getElementById("incomeSource").value;
+            document.getElementById("businessSection").style.display = incomeSource === "Business" ? "block" : "none";
+            document.getElementById("employeeSection").style.display = incomeSource === "Employee" ? "block" : "none";
+        }
+
+        function showPersonalSection() {
+            document.getElementById("businessSection").style.display = "none";
+            document.getElementById("employeeSection").style.display = "none";
+            document.getElementById("personalSection").style.display = "block";
+        }
+
+        document.getElementById("personalForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            saveToLocalStorage();
+            let incomeSource = localStorage.getItem("incomeSource");
+
+            if (incomeSource === "Business") {
+                document.getElementById("personalSection").style.display = "none";
+                document.getElementById("businessSection").style.display = "block";
+            } else if (incomeSource === "Employee") {
+                document.getElementById("personalSection").style.display = "none";
+                document.getElementById("employeeSection").style.display = "block";
+            } else {
+                createPDF();
+            }
+        });
+
+        document.getElementById("businessForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            saveToLocalStorage();
+            createPDF();
+        });
+
+        document.getElementById("employeeForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            saveToLocalStorage();
+            createPDF();
+        });
+
+        function saveToLocalStorage() {
+            document.querySelectorAll("input, select").forEach(input => {
+                localStorage.setItem(input.id, input.value || "N/A");
+            });
+        }
+
+        function createPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.text("Checking Account", 50, 20);
+    let y = 40;
+
+    let keys = ["email", "name", "age", "address", "sex", "maritalStatus", "incomeSource", 
+                "businessName", "businessAddress", "employeeName", "employeeAddress"];
+
+    keys.forEach(key => {
+        let value = localStorage.getItem(key) || "N/A";
+        doc.text(`${key.replace(/([A-Z])/g, " $1")}: ${value}`, 20, y);
+        y += 10;
+    });
+
+    y += 20;
+    doc.text("Account Type", 20, y);
+    y += 10;
+
+    let checkingAccount = localStorage.getItem("Checking_Account") || "Not Selected";
+    doc.text(`Account Type: ${checkingAccount} Checking`, 20, y);
+
+    doc.save(`${localStorage.getItem("name") || "Checking Account"}.pdf`);
+}
+</script>
+</body>
+</html>

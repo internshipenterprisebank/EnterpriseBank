@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee - Passbook</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 500px;
+            background: white;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 30px;
+            font-weight: bold;
+            color: #0A0A66;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0A0A66;
+        }
+
+        p {
+            font-size: 18px;
+            color: #0A0A66;
+        }
+
+        label {
+            margin-left: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #0A0A66;
+            display: block;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        input, select {
+        width: 95%; /* Adjust width */
+        padding: 10px;
+        border: 2px solid #0A0A66;
+        border-radius: 5px;
+        font-size: 16px;
+        margin-top: 5px;
+        text-align: left;
+        box-sizing: border-box; /* Prevents overflow */
+     }
+
+     select:focus, input:focus {
+        outline: none;
+        border-color: #ff8c00;
+        box-shadow: 0px 0px 5px rgba(255, 140, 0, 0.7);
+    }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 2px solid;
+            cursor: pointer;
+            border-radius: 20px;
+            width: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .btn-back {
+            border-color: blue;
+            color: blue;
+            background: white;
+        }
+
+        .btn-next {
+            border-color: orange;
+            color: orange;
+            background: white;
+        }
+
+        .btn-back:hover {
+            background: blue;
+            color: white;
+        }
+
+        .btn-next:hover {
+            background: orange;
+            color: white;
+        }
+
+        /* Hide second section initially */
+        #reviewSection {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="formSection">
+        <h2>Personal Information</h2>
+        <form id="loanForm">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+
+            <label for="sex">Sex:</label>
+            <select id="sex" required>
+                <option value="" disabled selected>Pick</option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+            </select>
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" required>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" required>
+
+            <label for="phone">Phone #:</label>
+            <input type="tel" id="phone" required>
+
+            <label for="status">Status:</label>
+            <select id="status" required onchange="toggleSpouseFields()">
+                <option value="" disabled selected>Pick</option>
+                <option value="single">Single</option>
+                <option value="married">Married</option>
+                <option value="widow">Widow</option>
+                <option value="separated">Separated</option> 
+            </select>
+
+            <label for="asawa">Spouse Name:</label>
+            <input type="text" id="asawa" required>
+
+            <label for="work">Occupation:</label>
+            <input type="text" id="work" required>
+            
+
+            <div class="buttons">
+                <button type="button" class="btn btn-back" onclick="goBack()">Back</button>
+                <button type="submit" class="btn btn-next">Next</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="container" id="reviewSection">
+        <h1>Passbook</h1>
+        <h2>Review Your Information</h2>
+        <p><strong>Email:</strong> <span id="displayEmail"></span></p> 
+        <p><strong>Name:</strong> <span id="displayName"></span></p>
+        <p><strong>Sex:</strong> <span id="displaySex"></span></p>
+        <p><strong>Age:</strong> <span id="displayAge"></span></p>
+        <p><strong>Address:</strong> <span id="displayAddress"></span></p>
+        <p><strong>Phone #:</strong> <span id="displayPhone"></span></p> 
+        <p><strong>Status:</strong> <span id="displaystatus"></span></p>
+        <p><strong>Spouse Name:</strong> <span id="displayasawa"></span></p>
+        <p><strong>Occupation:</strong> <span id="displaywork"></span></p>
+
+        <div class="buttons">
+            <button class="btn btn-back" onclick="editForm()">Edit</button>
+            <button class="btn btn-next" onclick="createPDF()">Next</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+        function goBack() {
+            window.location.href = "1st.html";
+        }
+        
+        function editForm() {
+            document.getElementById("formSection").style.display = "block";
+            document.getElementById("reviewSection").style.display = "none";
+        }
+
+        function toggleSpouseFields() {
+            let status = document.getElementById("status").value;
+            let asawaField = document.getElementById("asawa");
+            let workField = document.getElementById("work");
+            
+            if (status === "married") {
+                asawaField.disabled = false;
+                workField.disabled = false;
+                asawaField.style.borderColor = "#ff8c00"; // Default color
+                workField.style.borderColor = "#ff8c00";  // Default color
+                asawaField.style.backgroundColor = "white";
+                workField.style.backgroundColor = "white";
+            } else {
+                asawaField.disabled = true;
+                workField.disabled = true;
+                asawaField.value = "";
+                workField.value = "";
+                asawaField.style.borderColor = "#ccc"; // Gray out
+                workField.style.borderColor = "#ccc";  // Gray out
+                asawaField.style.backgroundColor = "#f4f4f4";
+                workField.style.backgroundColor = "#f4f4f4";
+            }
+        }
+
+        document.getElementById("loanForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            let email = document.getElementById("email").value;
+            let name = document.getElementById("name").value;
+            let sex = document.getElementById("sex").value;
+            let age = document.getElementById("age").value;
+            let address = document.getElementById("address").value;     
+            let phone = document.getElementById("phone").value; 
+            let status = document.getElementById("status").value;
+            let asawa = document.getElementById("asawa").value;
+            let work = document.getElementById("work").value;
+
+            // Save data to local storage
+            localStorage.setItem("email", email);  
+            localStorage.setItem("name", name);
+            localStorage.setItem("age", age);
+            localStorage.setItem("address", address);
+            localStorage.setItem("sex", sex);
+            localStorage.setItem("phone", phone); 
+            localStorage.setItem("status", status);
+            localStorage.setItem("asawa", asawa);
+            localStorage.setItem("work", work);
+            
+            // Display data on next section
+            document.getElementById("displayEmail").textContent = email;
+            document.getElementById("displayName").textContent = name;
+            document.getElementById("displayAge").textContent = age;
+            document.getElementById("displayAddress").textContent = address;
+            document.getElementById("displaySex").textContent = sex;
+            document.getElementById("displayPhone").textContent = phone; 
+            document.getElementById("displaystatus").textContent = status;
+            document.getElementById("displayasawa").textContent = asawa;
+            document.getElementById("displaywork").textContent = work;
+            
+
+            // Hide form and show review section
+            document.getElementById("formSection").style.display = "none";
+            document.getElementById("reviewSection").style.display = "block"; 
+        });
+
+        function createPDF() {
+    const { jsPDF } = window.jspdf;
+
+    if (!jsPDF) {
+        alert("jsPDF library failed to load. Please check your script reference.");
+        return;
+    }
+
+    // Retrieve data from localStorage
+    const email = localStorage.getItem("email") || "N/A";    
+    const name = localStorage.getItem("name") || "Applicant";
+    const age = localStorage.getItem("age") || "N/A";
+    const address = localStorage.getItem("address") || "N/A";
+    const sex = localStorage.getItem("sex") || "N/A";
+    const phone = localStorage.getItem("phone") || "N/A"; 
+    const status = localStorage.getItem("status") || "N/A";
+    const asawa = localStorage.getItem("asawa") || "N/A";
+    const work = localStorage.getItem("work") || "N/A";
+
+    // Create a new jsPDF instance
+    const doc = new jsPDF();
+
+    // Set font size
+    doc.setFontSize(22);
+    doc.text("Passbook Employee Form", 60, 20); 
+
+    // Personal Information Section
+    doc.setFontSize(18);
+    doc.text("Personal Information", 20, 40);
+
+    doc.setFontSize(14);
+    doc.text(`Email: ${email}`, 20, 50); 
+    doc.text(`Name: ${name}`, 20, 60);
+    doc.text(`Age: ${age}`, 20, 70);
+    doc.text(`Address: ${address}`, 20, 80);
+    doc.text(`Sex: ${sex}`, 20, 90);
+    doc.text(`Phone: ${phone}`, 20, 100); 
+    doc.text(`Status: ${status}`, 20, 110);
+
+    if (status === "married") {
+        doc.text(`Spouse Name: ${asawa}`, 20, 120);
+        doc.text(`Occupation: ${work}`, 20, 130);
+    }
+
+    // Save and download the PDF
+    doc.save(`${name}_Employee_ATM.pdf`);
+
+    setTimeout(() => {
+        window.location.href = "Employee2nd.html";
+    }, 1000); // Delay to ensure download finishes
+}
+
+
+        
+
+        
+    </script>
+
+</body>
+</html>

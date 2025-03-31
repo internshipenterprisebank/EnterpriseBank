@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checking Account</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 500px;
+            background: white;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0A0A66;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #0A0A66;
+            display: block;
+            margin-top: 15px;
+            text-align: left;
+            margin-left: 18px;
+        }
+
+        select, input {
+            width: 95%;
+            padding: 10px;
+            border: 2px solid #0A0A66;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 2px solid;
+            cursor: pointer;
+            border-radius: 20px;
+            width: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-next { border-color: orange; color: orange; background: white; }
+        .btn-next:hover { background: orange; color: white; }
+
+        .btn-back { border-color: blue; color: blue; background: white; }
+        .btn-back:hover { background: blue; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container" id="loanSection">
+        <h2>Loan Information</h2>
+        <form id="loanForm">
+            <label for="loanPurpose">Loan Purpose:</label>
+            <input type="text" id="loanPurpose" required>
+            <label for="referredBy">Referred By:(Name of Cooperative`)</label>
+            <input type="text" id="referredBy" required>
+            <div class="buttons">
+                <button type="button" class="btn btn-next" onclick="showPersonalInfo()">Next</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="container" id="personalSection" style="display: none;">
+        <h2>Personal Information</h2>
+        <form id="personalForm">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+            <label for="age">Age:</label>
+            <input type="number" id="age" required>
+            <label for="address">Address:</label>
+            <input type="text" id="address" required>
+            <label for="sex">Sex:</label>
+            <input type="text" id="sex" required>
+            <label for="maritalStatus">Marital Status:</label>
+            <select id="maritalStatus" required>
+                <option value="">Select</option>
+                <option value="Single">Single</option>
+                <option value="Widow">Widow</option>
+                <option value="Separated">Separated</option>
+                <option value="Married">Married</option>
+            </select>
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" required>
+            <div class="buttons">
+                <button type="button" class="btn btn-back" onclick="showLoanSection()">Back</button>
+                <button type="button" class="btn btn-next" onclick="generatePDF()">Next</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function showPersonalInfo() {
+            document.getElementById("loanSection").style.display = "none";
+            document.getElementById("personalSection").style.display = "block";
+        }
+
+        function showLoanSection() {
+            document.getElementById("personalSection").style.display = "none";
+            document.getElementById("loanSection").style.display = "block";
+        }
+
+        function generatePDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    let y = 20;
+
+    doc.text("Loan Information", 20, y);
+    y += 10;
+    doc.text(`Loan Purpose: ${document.getElementById("loanPurpose").value}`, 20, y);
+    y += 10;
+    doc.text(`Referred By: ${document.getElementById("referredBy").value}`, 20, y);
+
+    y += 20;
+    doc.text("Personal Information", 20, y);
+    y += 10;
+    doc.text(`Email: ${document.getElementById("email").value}`, 20, y);
+    y += 10;
+    doc.text(`Name: ${document.getElementById("name").value}`, 20, y);
+    y += 10;
+    doc.text(`Age: ${document.getElementById("age").value}`, 20, y);
+    y += 10;
+    doc.text(`Address: ${document.getElementById("address").value}`, 20, y);
+    y += 10;
+    doc.text(`Sex: ${document.getElementById("sex").value}`, 20, y);
+    y += 10;
+    doc.text(`Marital Status: ${document.getElementById("maritalStatus").value}`, 20, y);
+    y += 10;
+    doc.text(`Phone Number: ${document.getElementById("phone").value}`, 20, y);
+
+    y += 20;
+    doc.text("Account Type", 20, y);
+    y += 10;
+
+    // Get the stored account type from localStorage
+    let accountType = localStorage.getItem("Checking_Account") || "Not Selected";
+    doc.text(`Account Type: ${accountType} Checking`, 20, y);
+
+    // Save the PDF
+    doc.save("Checking_Account.pdf");
+
+    // Redirect to the next page after saving
+    setTimeout(() => {
+        window.location.href = "submit.html";
+    }, 1000);
+}
+
+
+        
+        </script>
+</body>
+</html>

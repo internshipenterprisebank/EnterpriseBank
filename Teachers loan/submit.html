@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Steps</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background: white;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            border: 2px solid #0A0A66;
+        }
+
+        h1, h2 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0A0A66;
+        }
+
+        p {
+            font-size: 18px;
+            color: #0A0A66;
+            line-height: 1.8;
+            font-weight: bold;
+            background: #e6e6ff;
+            padding: 10px;
+            border-left: 5px solid #0A0A66;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: left;
+        }
+
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 2px solid #0A0A66;
+            background: white;
+            color: #0A0A66;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #0A0A66;
+            color: white;
+        }
+
+        .copy-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        #copyLink {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #0A0A66;
+            border-radius: 5px;
+            background-color: #e6e6ff;
+            color: #0A0A66;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            border: 2px solid #0A0A66;
+            max-width: 400px;
+        }
+
+        .popup p {
+            font-size: 18px;
+            color: #0A0A66;
+        }
+
+        @media (min-width: 600px) {
+            .button-container {
+                flex-direction: row;
+                justify-content: center;
+            }
+            .copy-container {
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Submission Steps</h1>
+    
+        <p>Step 1: Copy the link</p>
+        <div class="copy-container">
+            <input type="text" id="copyLink" value="https://www.facebook.com/share/16bPwZMkXA/" readonly>
+            <button class="btn" onclick="copyToClipboard(this)">Copy</button>
+        </div>
+    
+        <p>Step 2: Click the message.</p>
+        <p>Step 3: Type your full name and service you've chosen (Time Deposit, Enterprise loan, Teachers loan, ATM, Passbook & Checking Account)</p>
+        <p>Step 4: Upload the 2 PDF file</p>
+    
+        <div class="button-container">
+            <button class="btn" onclick="showPopup()">Submit</button>
+            <button class="btn" onclick="Homeback()">BACK</button>
+        </div>
+    </div>
+
+    <!-- Popup Box -->
+    <div id="popup" class="popup">
+        <p>Your application has been submitted. Our staff will process it and call you within 24 hours. Thank you.</p>
+        <button class="btn" onclick="hidePopup()">OK</button>
+    </div>
+
+    <script>
+        function showPopup() {
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function hidePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        function Homeback() {
+            window.location.href = "../index.html";
+        }
+
+        function copyToClipboard(button) {
+            const copyText = document.getElementById("copyLink");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+
+            button.textContent = "Copied!";
+            setTimeout(() => button.textContent = "Copy Link", 2000);
+        }
+    </script>
+</body>
+</html>

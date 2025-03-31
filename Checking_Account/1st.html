@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checking Account</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 500px;
+            background: white;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 30px;
+            font-weight: bold;
+            color: #0A0A66;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0A0A66;
+        }
+
+        p {
+            font-size: 15px;
+            color: #0A0A66;
+        }
+
+        label {
+            margin-left: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #0A0A66;
+            display: block;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        input, select {
+        width: 95%; /* Adjust width */
+        padding: 10px;
+        border: 2px solid #0A0A66;
+        border-radius: 5px;
+        font-size: 16px;
+        margin-top: 5px;
+        text-align: left;
+        box-sizing: border-box; /* Prevents overflow */
+     }
+
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 2px solid;
+            cursor: pointer;
+            border-radius: 20px;
+            width: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .btn-back {
+            border-color: blue;
+            color: blue;
+            background: white;
+        }
+
+        .btn-next {
+            border-color: orange;
+            color: orange;
+            background: white;
+        }
+
+        .btn-back:hover {
+            background: blue;
+            color: white;
+        }
+
+        .btn-next:hover {
+            background: orange;
+            color: white;
+        }
+
+        /* Hide second section initially */
+        #Personal_Button {
+            display: none; 
+            
+        }
+
+        .flex{
+            display: flex;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="formSection">
+        <div class="buttons">
+            <button type="button" class="btn btn-back" onclick="PersonalAcc()">Personal Checking Account</button>
+            <button type="submit" class="btn btn-next" onclick="LoanPurpose()">Loan Purpose</button>    
+        </div>
+    </div>
+
+    <div class="container" id="Personal_Button">
+        <div class="flex">
+            <div>
+                <button type="button" class="btn btn-back" onclick="next('Regular')">Regular Checking</button>  
+                <p>With checkbook Min. Maintaining Balance ₱3,500</p>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-next" onclick="next('Super')">Super Checking</button>
+                <p>With Passbook Maintaining Balance ₱5,000</p>   
+            </div>
+        </div>
+        <p>*This Checking Account is Non-interest bearing</p>   
+        <div class="buttons">
+            <button type="button" class="btn btn-back" onclick="back()">BACK</button>
+        </div>            
+    </div>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        function PersonalAcc(){
+            document.getElementById("Personal_Button").style.display = "block";
+            document.getElementById("formSection").style.display = "none";
+        }
+        function back(){
+            window.location.href = "../index.html";
+        }
+        function LoanPurpose(){
+            window.location.href = "LP_1st.html";
+        }
+        function next(accountType) {
+    localStorage.setItem("Checking_Account", accountType); // Store selected account
+    window.location.href = "PA_1st.html"; // Navigate to the next page
+}
+    </script>
+    
+
+</body>
+</html>

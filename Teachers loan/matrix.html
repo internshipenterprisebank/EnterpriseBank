@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matix</title>
+    <style>
+            body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    h1 {
+        font-size: 50px;
+        font-weight: bold;
+        margin-top: 20px;
+        color: #0A0A66;
+    }
+    p {
+        font-size: 20px;
+        color: #0A0A66;
+        width: 50%;
+        margin: 0 auto;
+    }
+    h2 {
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 20px;
+        color: #0A0A66;
+    }
+    .container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        overflow-x: auto; /* Allows table to be scrollable */
+        width: 100%;
+    }
+    table {
+        width: 100%;
+        max-width: 800px; 
+        border-collapse: separate;
+        border-spacing: 5px; 
+        background-color: #fff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    th, td {
+        padding: 15px;
+        border: 1px solid #ddd;
+        text-align: center;
+        color: #0A0A66;
+    }
+    th {
+        background-color: #ff8c00;
+    }
+    .blue-bg {
+        background-color: #1e88e5;
+    }
+    .orange-bg {
+        background-color: #ff8c00;
+        font-weight: bold;
+    }
+    .oranges-bg {
+        background-color: #f7d5ad;
+        font-weight: bold;
+    }
+    .orangess-bg {
+        background-color: #f6af5e;
+        font-weight: bold;
+    }
+    .buttons {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: 2px solid;
+        cursor: pointer;
+        border-radius: 20px;
+        width: 120px;
+        transition: all 0.3s ease;
+    }
+    .btn:hover {
+        opacity: 0.8;
+    }
+    .btn-back {
+        border-color: blue;
+        color: blue;
+        background: white;
+    }
+    .btn-next {
+        border-color: orange;
+        color: orange;
+        background: white;
+    }
+    .btn-back:hover {
+        border-color: blue;
+        color: white;
+        background: blue;
+    }
+    .btn-next:hover {
+        border-color: orange;
+        color: white;
+        background: orange;
+    }
+
+
+    /* Responsive styles */
+    @media (max-width: 768px) { 
+        h1 { font-size: 28px; }
+        h2 { font-size: 18px; }
+        p { font-size: 16px; width: 80%; }
+        th, td { padding: 10px; font-size: 14px; }
+        .btn { width: 100px; font-size: 14px; }
+        .container { overflow-x: auto; }
+    }
+
+    @media (max-width: 480px) { 
+        h1 { font-size: 24px; }
+        h2 { font-size: 16px; }
+        p { font-size: 14px; width: 90%; }
+        .container { width: 100%; overflow-x: auto; }
+        table { width: 100%; font-size: 12px; display: block; overflow-x: auto; }
+        th, td { padding: 8px; font-size: 12px; white-space: nowrap; }
+        .buttons { flex-direction: column; gap: 10px; align-items: center; }
+        .btn { width: 90%; max-width: 200px; font-size: 14px; }
+    }
+
+    @media (max-width: 320px) { 
+        h1 { font-size: 20px; }
+        h2 { font-size: 14px; }
+        p { font-size: 12px; width: 95%; }
+        table { font-size: 10px; }
+        th, td { padding: 5px; font-size: 10px; }
+        .btn { font-size: 12px; width: 100px; }
+    }
+
+    label {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0A0A66;
+    display: block;
+    margin-top: 15px;
+}
+
+select, input {
+    width: 200px;
+    padding: 10px;
+    border: 2px solid #0A0A66;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 5px 0 15px;
+    text-align: center;
+}
+
+select {
+    background-color: #fff;
+    color: #0A0A66;
+    cursor: pointer;
+}
+
+input {
+    background-color: #f9f9f9;
+}
+
+select:focus, input:focus {
+    outline: none;
+    border-color: #ff8c00;
+    box-shadow: 0px 0px 5px rgba(255, 140, 0, 0.7);
+}
+
+@media (max-width: 480px) {
+    select, input {
+        width: 90%;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+
+    <div class="buttons">
+        <a href="../index.html"><button class="btn btn-back" >BACK</button></a>
+        <a href="1st.html"><button class="btn btn-back" >NEXT</button></a>
+    </div>
+    <h1>Matrix</h1>
+    <div class="container">
+        <table>
+            <tr>
+                <th class="orange-bg">PRINCIPAL</th>
+                <th class="orange-bg">NET PROCEEDS</th>
+                <th class="orange-bg">60 MONTHS</th>
+                <th class="orange-bg">48 MONTHS</th>
+                <th class="orange-bg">36 MONTHS</th>
+                <th class="orange-bg">24 MONTHS</th>
+                <th class="orange-bg">12 MONTHS</th>
+            </tr>
+            <tr>
+                <td class="oranges-bg">10,000.00</td>
+                <td class="orangess-bg">9,400.00</td>
+                <td class="oranges-bg">211.00</td>
+                <td class="orangess-bg">253.00</td>
+                <td class="oranges-bg">322.00</td>
+                <td class="orangess-bg">457.00</td>
+                <td class="oranges-bg">868.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">15,000.00</td>
+                <td class="orangess-bg">14,100.00</td>
+                <td class="oranges-bg">317.00</td>
+                <td class="orangess-bg">379.00</td>
+                <td class="oranges-bg">482.00</td>
+                <td class="orangess-bg">686.00</td>
+                <td class="oranges-bg">1,302.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">20,000.00</td>
+                <td class="orangess-bg">18,800.00</td>
+                <td class="oranges-bg">422.00</td>
+                <td class="orangess-bg">505.00</td>
+                <td class="oranges-bg">643.00</td>
+                <td class="orangess-bg">914.00</td>
+                <td class="oranges-bg">1,736.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">25,000.00</td>
+                <td class="orangess-bg">23,500.00</td>
+                <td class="oranges-bg">528.00</td>
+                <td class="orangess-bg">631.00</td>
+                <td class="oranges-bg">803.00</td>
+                <td class="orangess-bg">1,143.00</td>
+                <td class="oranges-bg">2,169.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">30,000.00</td>
+                <td class="orangess-bg">28,200.00</td>
+                <td class="oranges-bg">633.00</td>
+                <td class="orangess-bg">756.00</td>
+                <td class="oranges-bg">964.00</td>
+                <td class="orangess-bg">1,371.00</td>
+                <td class="oranges-bg">2,603.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">35,000.00</td>
+                <td class="orangess-bg">32,900.00</td>
+                <td class="oranges-bg">738.00</td>
+                <td class="orangess-bg">882.00</td>
+                <td class="oranges-bg">1,124.00</td>
+                <td class="orangess-bg">1,599.00</td>
+                <td class="oranges-bg">3,037.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">40,000.00</td>
+                <td class="orangess-bg">37,600.00</td>
+                <td class="oranges-bg">844.00</td>
+                <td class="orangess-bg">1,008.00</td>
+                <td class="oranges-bg">1,285.00</td>
+                <td class="orangess-bg">1,828.00</td>
+                <td class="oranges-bg">3,471.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">45,000.00</td>
+                <td class="orangess-bg">42,300.00</td>
+                <td class="oranges-bg">949.00</td>
+                <td class="orangess-bg">1,134.00</td>
+                <td class="oranges-bg">1,445.00</td>
+                <td class="orangess-bg">2,056.00</td>
+                <td class="oranges-bg">3,905.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">50,000.00</td>
+                <td class="orangess-bg">47,000.00</td>
+                <td class="oranges-bg">1,055.00</td>
+                <td class="orangess-bg">1,260.00</td>
+                <td class="oranges-bg">1,606.00</td>
+                <td class="orangess-bg">2,285.00</td>
+                <td class="oranges-bg">4,338.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">55,000.00</td>
+                <td class="orangess-bg">51,700.00</td>
+                <td class="oranges-bg">1,160.00</td>
+                <td class="orangess-bg">1,386.00</td>
+                <td class="oranges-bg">1,766.00</td>
+                <td class="orangess-bg">2,513.00</td>
+                <td class="oranges-bg">4,772.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">60,000.00</td>
+                <td class="orangess-bg">56,400.00</td>
+                <td class="oranges-bg">1,265.00</td>
+                <td class="orangess-bg">1,512.00</td>
+                <td class="oranges-bg">1,927.00</td>
+                <td class="orangess-bg">2,742.00</td>
+                <td class="oranges-bg">5,206.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">65,000.00</td>
+                <td class="orangess-bg">61,100.00</td>
+                <td class="oranges-bg">1,371.00</td>
+                <td class="orangess-bg">1,638.00</td>
+                <td class="oranges-bg">2,087.00</td>
+                <td class="orangess-bg">2,970.00</td>
+                <td class="oranges-bg">5,640.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">70,000.00</td>
+                <td class="orangess-bg">65,800.00</td>
+                <td class="oranges-bg">1,476.00</td>
+                <td class="orangess-bg">1,764.00</td>
+                <td class="oranges-bg">2,248.00</td>
+                <td class="orangess-bg">3,198.00</td>
+                <td class="oranges-bg">6,074.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">80,000.00</td>
+                <td class="orangess-bg">75,200.00</td>
+                <td class="oranges-bg">1,687.00</td>
+                <td class="orangess-bg">2,016.00</td>
+                <td class="oranges-bg">2,569.00</td>
+                <td class="orangess-bg">3,655.00</td>
+                <td class="oranges-bg">6,941.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">85,000.00</td>
+                <td class="orangess-bg">79,900.00</td>
+                <td class="oranges-bg">1,792.00</td>
+                <td class="orangess-bg">2,142.00</td>
+                <td class="oranges-bg">2,730.00</td>
+                <td class="orangess-bg">3,884.00</td>
+                <td class="oranges-bg">7,375.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">90,000.00</td>
+                <td class="orangess-bg">84,600.00</td>
+                <td class="oranges-bg">1,898.00</td>
+                <td class="orangess-bg">2,268.00</td>
+                <td class="oranges-bg">2,890.00</td>
+                <td class="orangess-bg">4,112.00</td>
+                <td class="oranges-bg">7,809.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">95,000.00</td>
+                <td class="orangess-bg">89,300.00</td>
+                <td class="oranges-bg">2,003.00</td>
+                <td class="orangess-bg">2,394.00</td>
+                <td class="oranges-bg">3,051.00</td>
+                <td class="orangess-bg">4,341.00</td>
+                <td class="oranges-bg">8,242.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">100,000.00</td>
+                <td class="orangess-bg">94,000.00</td>
+                <td class="oranges-bg">2,109.00</td>
+                <td class="orangess-bg">2,520.00</td>
+                <td class="oranges-bg">3,211.00</td>
+                <td class="orangess-bg">4,569.00</td>
+                <td class="oranges-bg">8,676.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">150,000.00</td>
+                <td class="orangess-bg">141,000.00</td>
+                <td class="oranges-bg">3,163.00</td>
+                <td class="orangess-bg">3,780.00</td>
+                <td class="oranges-bg">4,817.00</td>
+                <td class="orangess-bg">6,853.00</td>
+                <td class="oranges-bg">13,014.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">200,000.00</td>
+                <td class="orangess-bg">188,000.00</td>
+                <td class="oranges-bg">4,217.00</td>
+                <td class="orangess-bg">5,040.00</td>
+                <td class="oranges-bg">6,422.00</td>
+                <td class="orangess-bg">9,137.00</td>
+                <td class="oranges-bg">17,352.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">250,000.00</td>
+                <td class="orangess-bg">235,000.00</td>
+                <td class="oranges-bg">5,271.00</td>
+                <td class="orangess-bg">6,300.00</td>
+                <td class="oranges-bg">8,027.00</td>
+                <td class="orangess-bg">11,422.00</td>
+                <td class="oranges-bg">21,690.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">300,000.00</td>
+                <td class="orangess-bg">282,000.00</td>
+                <td class="oranges-bg">6,325.00</td>
+                <td class="orangess-bg">7,560.00</td>
+                <td class="oranges-bg">9,633.00</td>
+                <td class="orangess-bg">13,706.00</td>
+                <td class="oranges-bg">26,028.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">350,000.00</td>
+                <td class="orangess-bg">329,000.00</td>
+                <td class="oranges-bg">7,379.00</td>
+                <td class="orangess-bg">8,820.00</td>
+                <td class="oranges-bg">11,238.00</td>
+                <td class="orangess-bg">15,990.00</td>
+                <td class="oranges-bg">30,366.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">400,000.00</td>
+                <td class="orangess-bg">376,000.00</td>
+                <td class="oranges-bg">8,433.00</td>
+                <td class="orangess-bg">10,080.00</td>
+                <td class="oranges-bg">12,844.00</td>
+                <td class="orangess-bg">18,274.00</td>
+                <td class="oranges-bg">34,703.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">450,000.00</td>
+                <td class="orangess-bg">423,000.00</td>
+                <td class="oranges-bg">9,487.00</td>
+                <td class="orangess-bg">11,340.00</td>
+                <td class="oranges-bg">14,449.00</td>
+                <td class="orangess-bg">20,559.00</td>
+                <td class="oranges-bg">39,041.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">500,000.00</td>
+                <td class="orangess-bg">470,000.00</td>
+                <td class="oranges-bg">10,541.00</td>
+                <td class="orangess-bg">12,600.00</td>
+                <td class="oranges-bg">16,054.00</td>
+                <td class="orangess-bg">22,843.00</td>
+                <td class="oranges-bg">43,379.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">550,000.00</td>
+                <td class="orangess-bg">517,000.00</td>
+                <td class="oranges-bg">11,595.00</td>
+                <td class="orangess-bg">13,860.00</td>
+                <td class="oranges-bg">17,660.00</td>
+                <td class="orangess-bg">25,126.00</td>
+                <td class="oranges-bg">47,717.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">600,000.00</td>
+                <td class="orangess-bg">564,000.00</td>
+                <td class="oranges-bg">12,649.00</td>
+                <td class="orangess-bg">15,120.00</td>
+                <td class="oranges-bg">19,265.00</td>
+                <td class="orangess-bg">27,411.00</td>
+                <td class="oranges-bg">52,055.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">650,000.00</td>
+                <td class="orangess-bg">611,000.00</td>
+                <td class="oranges-bg">13,702.00</td>
+                <td class="orangess-bg">16,380.00</td>
+                <td class="oranges-bg">20,871.00</td>
+                <td class="orangess-bg">29,696.00</td>
+                <td class="oranges-bg">56,393.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">700,000.00</td>
+                <td class="orangess-bg">658,000.00</td>
+                <td class="oranges-bg">14,757.00</td>
+                <td class="orangess-bg">17,640.00</td>
+                <td class="oranges-bg">22,476.00</td>
+                <td class="orangess-bg">31,980.00</td>
+                <td class="oranges-bg">60,731.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">750,000.00</td>
+                <td class="orangess-bg">705,000.00</td>
+                <td class="oranges-bg">15,811.00</td>
+                <td class="orangess-bg">18,900.00</td>
+                <td class="oranges-bg">24,081.00</td>
+                <td class="orangess-bg">34,264.00</td>
+                <td class="oranges-bg">65,069.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">800,000.00</td>
+                <td class="orangess-bg">752,000.00</td>
+                <td class="oranges-bg">16,865.00</td>
+                <td class="orangess-bg">20,160.00</td>
+                <td class="oranges-bg">25,687.00</td>
+                <td class="orangess-bg">36,548.00</td>
+                <td class="oranges-bg">69,406.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">850,000.00</td>
+                <td class="orangess-bg">799,000.00</td>
+                <td class="oranges-bg">17,919.00</td>
+                <td class="orangess-bg">21,420.00</td>
+                <td class="oranges-bg">27,292.00</td>
+                <td class="orangess-bg">38,833.00</td>
+                <td class="oranges-bg">73,744.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">900,000.00</td>
+                <td class="orangess-bg">846,000.00</td>
+                <td class="oranges-bg">18,973.00</td>
+                <td class="orangess-bg">22,680.00</td>
+                <td class="oranges-bg">28,898.00</td>
+                <td class="orangess-bg">41,117.00</td>
+                <td class="oranges-bg">78,082.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">950,000.00</td>
+                <td class="orangess-bg">893,000.00</td>
+                <td class="oranges-bg">20,027.00</td>
+                <td class="orangess-bg">23,940.00</td>
+                <td class="oranges-bg">30,503.00</td>
+                <td class="orangess-bg">43,401.00</td>
+                <td class="oranges-bg">82,420.00</td>
+            </tr>
+            <tr>
+                <td class="oranges-bg">1,000,000.00</td>
+                <td class="orangess-bg">940,000.00</td>
+                <td class="oranges-bg">21,081.00</td>
+                <td class="orangess-bg">25,200.00</td>
+                <td class="oranges-bg">32,107.00</td>
+                <td class="orangess-bg">45,685.00</td>
+                <td class="oranges-bg">86,756.00</td>
+            </tr>
+        </table>
+        
+    </div>
+    
+
+    
+
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Deposit</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 500px;
+            background: white;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0A0A66;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #0A0A66;
+            display: block;
+            margin-top: 15px;
+            text-align: left;
+            margin-left: 18px;
+        }
+
+        input {
+            width: 95%;
+            padding: 10px;
+            border: 2px solid #0A0A66;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 2px solid;
+            cursor: pointer;
+            border-radius: 20px;
+            width: 120px;
+            transition: all 0.3s ease;
+        }
+        select:focus, input:focus {
+        outline: none;
+        border-color: #ff8c00;
+        box-shadow: 0px 0px 5px rgba(255, 140, 0, 0.7);
+    }
+
+        .btn-next { border-color: orange; color: orange; background: white; }
+        .btn-next:hover { background: orange; color: white; }
+
+        .btn-back { border-color: blue; color: blue; background: white; }
+        .btn-back:hover { background: blue; color: white; }
+
+        #businessSection, #reviewPersonal, #reviewBusiness { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="personalSection">
+        <h2>Personal Information</h2>
+        <form id="personalForm">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+            <label for="age">Age:</label>
+            <input type="number" id="age" required>
+            <label for="address">Address:</label>
+            <input type="text" id="address" required>
+            <label for="sex">Sex:</label>
+            <input type="text" id="sex" required>
+            <label for="status">Status:</label>
+            <input type="text" id="status" required>
+            <label for="phone">Phone #:</label>
+            <input type="tel" id="phone" required>
+            <div class="buttons">
+                <button type="submit" class="btn btn-next" onclick="nexttobuss()">Next</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="container" id="businessSection">
+        <h2>Business Information</h2>
+        <form id="businessForm">
+            <label for="businessName">Business Name:</label>
+            <input type="text" id="businessName" required>
+            <label for="years">Years of Business Operation:</label>
+            <input type="number" id="years" required>
+            <label for="businessAddress">Business Address:</label>
+            <input type="text" id="businessAddress" required>
+            <div class="buttons">
+                <button type="button" class="btn btn-back" onclick="showPersonalSection()">Back</button>
+                <button type="submit" class="btn btn-next">Next</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="container" id="reviewPersonal">
+        <h2>Review Personal Information</h2>
+        <p>Email: <span id="displayEmail"></span></p>
+        <p>Name: <span id="displayName"></span></p>
+        <p>Age: <span id="displayAge"></span></p>
+        <p>Address: <span id="displayAddress"></span></p>
+        <p>Sex: <span id="displaySex"></span></p>
+        <p>Status: <span id="displayStatus"></span></p>
+        <p>Phone #: <span id="displayPhone"></span></p>
+        <div class="buttons">
+            <button class="btn btn-next" onclick="showBusinessSection()">Next</button>
+        </div>
+    </div>
+
+    <div class="container" id="reviewBusiness">
+        <h2>Review Business Information</h2>
+        <p>Business Name: <span id="displayBusinessName"></span></p>
+        <p>Years of Operation: <span id="displayYears"></span></p>
+        <p>Business Address: <span id="displayBusinessAddress"></span></p>
+        <div class="buttons">
+            <button class="btn btn-next" onclick="createPDF()">Submit</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    
+    <script>
+        document.getElementById("personalForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    
+    // Save personal info in localStorage
+    localStorage.setItem("email", document.getElementById("email").value);
+    localStorage.setItem("name", document.getElementById("name").value);
+    localStorage.setItem("age", document.getElementById("age").value);
+    localStorage.setItem("address", document.getElementById("address").value);
+    localStorage.setItem("sex", document.getElementById("sex").value);
+    localStorage.setItem("status", document.getElementById("status").value);
+    localStorage.setItem("phone", document.getElementById("phone").value);
+    
+    document.getElementById("displayEmail").textContent = document.getElementById("email").value;
+    document.getElementById("displayName").textContent = document.getElementById("name").value;
+    document.getElementById("displayAge").textContent = document.getElementById("age").value;
+    document.getElementById("displayAddress").textContent = document.getElementById("address").value;
+    document.getElementById("displaySex").textContent = document.getElementById("sex").value;
+    document.getElementById("displayStatus").textContent = document.getElementById("status").value;
+    document.getElementById("displayPhone").textContent = document.getElementById("phone").value;
+    
+    document.getElementById("personalSection").style.display = "none";
+    document.getElementById("reviewPersonal").style.display = "block";
+});
+
+document.getElementById("businessForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    
+    // Save business info in localStorage
+    localStorage.setItem("businessName", document.getElementById("businessName").value);
+    localStorage.setItem("businessYears", document.getElementById("years").value);
+    localStorage.setItem("businessAddress", document.getElementById("businessAddress").value);
+    
+    document.getElementById("displayBusinessName").textContent = document.getElementById("businessName").value;
+    document.getElementById("displayYears").textContent = document.getElementById("years").value;
+    document.getElementById("displayBusinessAddress").textContent = document.getElementById("businessAddress").value;
+    
+    document.getElementById("businessSection").style.display = "none";
+    document.getElementById("reviewBusiness").style.display = "block";
+});
+
+function showPersonalSection() {
+    document.getElementById("businessSection").style.display = "none";
+    document.getElementById("personalSection").style.display = "block";
+}
+
+function showBusinessSection() {
+    document.getElementById("reviewPersonal").style.display = "none";
+    document.getElementById("businessSection").style.display = "block";
+}
+
+function createPDF() {
+    const { jsPDF } = window.jspdf;
+
+    if (!jsPDF) {
+        alert("jsPDF library failed to load. Please check your script reference.");
+        return;
+    }
+
+    // Retrieve data from localStorage
+    const email = localStorage.getItem("email") || "N/A";    
+    const name = localStorage.getItem("name") || "Applicant";
+    const age = localStorage.getItem("age") || "N/A";
+    const address = localStorage.getItem("address") || "N/A";
+    const sex = localStorage.getItem("sex") || "N/A";
+    const phone = localStorage.getItem("phone") || "N/A"; 
+    const status = localStorage.getItem("status") || "N/A";
+    
+    const businessName = localStorage.getItem("businessName") || "N/A";
+    const businessYears = localStorage.getItem("businessYears") || "N/A";
+    const businessAddress = localStorage.getItem("businessAddress") || "N/A";
+
+    const term = localStorage.getItem("term") || "N/A";
+    const loanAmount = localStorage.getItem("loanAmount") || "N/A";
+
+    // Create a new jsPDF instance
+    const doc = new jsPDF();
+
+    // Set font size
+    doc.setFontSize(22);
+    doc.text("Time Deposit", 60, 20); 
+
+    // Personal Information Section
+    doc.setFontSize(18);
+    doc.text("Personal Information", 20, 40);
+
+    doc.setFontSize(14);
+    doc.text(`Email: ${email}`, 20, 50); 
+    doc.text(`Name: ${name}`, 20, 60);
+    doc.text(`Age: ${age}`, 20, 70);
+    doc.text(`Address: ${address}`, 20, 80);
+    doc.text(`Sex: ${sex}`, 20, 90);
+    doc.text(`Phone: ${phone}`, 20, 100); 
+    doc.text(`Status: ${status}`, 20, 110);
+
+    // Business Information Section
+    doc.setFontSize(18);
+    doc.text("Business Information", 20, 130);
+
+    doc.setFontSize(14);
+    doc.text(`Business Name: ${businessName}`, 20, 140);
+    doc.text(`Years of Operation: ${businessYears}`, 20, 150);
+    doc.text(`Business Address: ${businessAddress}`, 20, 160);
+
+    // Loan Details Section
+    doc.setFontSize(18);
+    doc.text("Loan Details", 20, 180);
+
+    doc.setFontSize(14);
+    doc.text(`Term: ${term}`, 20, 190);
+    doc.text(`Loan Amount: ${loanAmount}`, 20, 200);
+
+    // Save and download the PDF
+    doc.save(`${name}_Time_Deposit.pdf`);
+
+    setTimeout(() => {
+        window.location.href = "2nd.html";
+    }, 1000); // Delay to ensure download finishes
+}
+
+    </script>
+</body>
+</html>
