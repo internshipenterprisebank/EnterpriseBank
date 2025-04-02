@@ -160,31 +160,40 @@
     
         // Generate PDF with the data stored in localStorage
         function createPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            let y = 40;
-            doc.text("Personal Checking Account", 10, y);
-            // Get and display the stored values
-            let keys = ["email", "name", "age", "address", "sex", "maritalStatus", "incomeSource", 
-                        "businessName", "businessAddress", "employeeName", "employeeAddress"];
-            
-            keys.forEach(key => {
-                let value = localStorage.getItem(key) || "N/A";
-                doc.text(`${key.replace(/([A-Z])/g, " $1")}: ${value}`, 20, y);
-                y += 10;
-            });
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    let y = 40; // Starting Y position
     
-            y += 20;
-            doc.text("Account Type", 20, y);
-            y += 10;
+    // Title
+    doc.text("Personal Checking Account", 10, y);
+    y += 10; // Space after the title
     
-            let checkingAccount = localStorage.getItem("Checking_Account") || "Not Selected";
-            doc.text(`Account Type: ${checkingAccount} Checking`, 20, y);
+    // Get and display the stored values
+    let keys = ["email", "name", "age", "address", "sex", "maritalStatus", "incomeSource", 
+                "businessName", "businessAddress", "employeeName", "employeeAddress"];
     
-            // Save the PDF with user's name or default name
-            doc.save(`${localStorage.getItem("name") || "Checking Account"}.pdf`);
-        }
+    // Loop through keys and add text to the PDF with proper line breaks
+    keys.forEach(key => {
+        let value = localStorage.getItem(key) || "N/A";
+        doc.text(`${key.replace(/([A-Z])/g, " $1")}: ${value}`, 10, y);
+        y += 10; // Increment Y position for next line
+    });
+
+    // Add space between sections
+    y += 10; 
+
+    // "Account Type" section
+    doc.text("Account Type", 10, y);
+    y += 10; // Increment Y position
     
+    let checkingAccount = localStorage.getItem("Checking_Account") || "Not Selected";
+    doc.text(`Account Type: ${checkingAccount} Checking`, 10, y);
+    
+    // Save the PDF with the user's name or default name
+    const name = localStorage.getItem("name") || "Checking Account";
+    doc.save(`${name}.pdf`);
+}
+
         // Handle the selection of income source
         function toggleIncomeSection() {
             let incomeSource = document.getElementById("incomeSource").value;
