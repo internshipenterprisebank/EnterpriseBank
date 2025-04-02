@@ -109,44 +109,56 @@
             document.getElementById("sameContainer").style.display = "none";
             document.getElementById("nextContainer").style.display = "block";
         }
-        
+    
         function showIncreaseContainer() {
             document.getElementById("nextContainer").style.display = "none";
             document.getElementById("increaseContainer").style.display = "block";
         }
-        
+    
         function showSameContainer() {
             document.getElementById("nextContainer").style.display = "none";
             document.getElementById("sameContainer").style.display = "block";
         }
-        
+    
         function goBack() {
             window.location.href = "1st.html";
         }
-        
+    
         function generatePDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            let content = "Teachers Loan Application\n\n";
-            content += "Salary Loan, Reloan " + "\n";
-            content += "Name: " + document.getElementById("name").value + "\n";
-            content += "Sex: " + document.getElementById("sex").value + "\n";
-            content += "Address: " + document.getElementById("address").value + "\n";
-            content += "Phone#: " + document.getElementById("phone").value + "\n\n";
-            
-            if (document.getElementById("increaseContainer").style.display === "block") {
-                content += "Increase Amount: " + document.getElementById("increase_amount").value + "\n";
-                content += "Years to Pay: " + document.getElementById("increase_years").value + "\n";
-                content += "Loan Purpose: " + document.getElementById("increase_purpose").value + "\n";
+            const accountType = localStorage.getItem("TeachersLoan") || "Not specified";
+    
+            let content = [
+                "Teachers Loan Application",
+                "----------------------------------------",
+                `Loan Type: ${accountType}`,
+                "Salary Loan, Reloan",
+                "----------------------------------------",
+                `Name: ${document.getElementById("name").value}`,
+                `Sex: ${document.getElementById("sex").value}`,
+                `Address: ${document.getElementById("address").value}`,
+                `Phone#: ${document.getElementById("phone").value}`,
+                "----------------------------------------",
+            ];
+    
+            if (document.getElementById("increaseContainer").style.display !== "none") {
+                content.push("Increase Amortization:");
+                content.push(`Increase Amount: ${document.getElementById("increase_amount").value}`);
+                content.push(`Years to Pay: ${document.getElementById("increase_years").value}`);
+                content.push(`Loan Purpose: ${document.getElementById("increase_purpose").value}`);
             } else {
-                content += "Years to Pay: " + document.getElementById("same_years").value + "\n";
-                content += "Loan Purpose: " + document.getElementById("same_purpose").value + "\n";
+                content.push("Same Amortization:");
+                content.push(`Years to Pay: ${document.getElementById("same_years").value}`);
+                content.push(`Loan Purpose: ${document.getElementById("same_purpose").value}`);
             }
-            
-            doc.text(content, 10, 10);
+    
+            doc.text(content, 10, 10); // Handles multiple lines properly
             doc.save("Teachers_Loan_Application.pdf");
+    
             setTimeout(() => { window.location.href = "5th.html"; }, 1000);
         }
     </script>
+    
 </body>
 </html>
