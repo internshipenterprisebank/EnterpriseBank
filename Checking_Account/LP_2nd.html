@@ -119,21 +119,21 @@
 
     <script>
         function showPersonalInfo() {
-            document.getElementById("loanSection").style.display = "none";
-            document.getElementById("personalSection").style.display = "block";
-        }
+    // Save loan information to localStorage
+    localStorage.setItem("loanPurpose", document.getElementById("loanPurpose").value);
+    localStorage.setItem("referredBy", document.getElementById("referredBy").value);
 
-        function showLoanSection() {
-            document.getElementById("personalSection").style.display = "none";
-            document.getElementById("loanSection").style.display = "block";
-        }
+    // Hide loan section and show personal info section
+    document.getElementById("loanSection").style.display = "none";
+    document.getElementById("personalSection").style.display = "block";
+}
 
-        function generatePDF() {
+function generatePDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     let y = 20;
 
-    // Loan Information (Retrieve values from localStorage or other fields)
+    // Loan Information (Retrieve values from localStorage)
     doc.text("Loan Information", 20, y);
     y += 10;
     doc.text(`Loan Purpose: ${localStorage.getItem("loanPurpose")}`, 20, y);
@@ -174,9 +174,6 @@
     }, 1000);
 }
 
-// This function should now call generatePDF when the user clicks 'Next'
-
-        
-        </script>
+    </script>
 </body>
 </html>
