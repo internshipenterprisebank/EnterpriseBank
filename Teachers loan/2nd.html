@@ -131,17 +131,26 @@
         }
         
         function generatePDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            doc.text("Teachers Loan Application", 10, 10);
-            doc.text("Salary loan, new loan", 10, 20);
-            doc.text(document.getElementById("reviewContent").innerText, 10, 30);
-            doc.save("Teachers_Loan_Application.pdf");
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-            setTimeout(() => {
-            window.location.href = "3rd.html";
+    const accountType = localStorage.getItem("TeachersLoan") || "Not specified";
+    
+    doc.text("Teachers Loan Application", 10, 10);
+    doc.text("Account Type: Salary Loan", 10, 20); // Ensure it's on a separate line
+    doc.text(`Loan Type: ${accountType}`, 10, 30); // Adjusted Y position to avoid overlap
+    
+    // Split the review content into multiple lines
+    let reviewText = document.getElementById("reviewContent").innerText;
+    let lines = doc.splitTextToSize(reviewText, 180); // Wrap text within 180px width
+    doc.text(lines, 10, 40); // Start at Y = 40
+
+    doc.save("Teachers_Loan_Application.pdf");
+
+    setTimeout(() => {
+        window.location.href = "3rd.html";
     }, 1000);
-        }
-    </script>
+}
+</script>
 </body>
 </html>
