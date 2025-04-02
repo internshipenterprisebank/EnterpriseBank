@@ -22,7 +22,7 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
 
-        #form2nsSection{
+        #form2nsSection {
             display: none;
         }
 
@@ -54,16 +54,15 @@
         }
 
         input, select {
-        width: 95%; /* Adjust width */
-        padding: 10px;
-        border: 2px solid #0A0A66;
-        border-radius: 5px;
-        font-size: 16px;
-        margin-top: 5px;
-        text-align: left;
-        box-sizing: border-box; /* Prevents overflow */
-     }
-
+            width: 95%;
+            padding: 10px;
+            border: 2px solid #0A0A66;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 5px;
+            text-align: left;
+            box-sizing: border-box;
+        }
 
         .buttons {
             display: flex;
@@ -124,46 +123,43 @@
 <body>
 
     <div class="container" id="formSection">
-        
         <div class="buttons">
-            <button type="button" class="btn btn-back" onclick="Student()">Salary loan</button>
-            <button type="submit" class="btn btn-next" onclick="employee()">ATM loan</button>    
+            <button type="button" class="btn btn-back" onclick="Student()">Salary Loan</button>
+            <button type="button" class="btn btn-next" onclick="employee()">ATM Loan</button>    
         </div>
         <div class="buttons">
             <button type="button" class="btn btn-back" onclick="goBack()">Back</button>  
         </div>
-        
     </div>
 
     <div class="container" id="form2nsSection">
-        
         <div class="buttons">
-            <button type="button" class="btn btn-back" onclick="newloan()">New Loan</button>
-            <button type="submit" class="btn btn-next" onclick="reloan()">Reloan</button>    
+            <button type="button" class="btn btn-back" onclick="next('newloan')">New Loan</button>
+            <button type="button" class="btn btn-next" onclick="next('reloan')">Reloan</button>    
         </div>
-        
     </div>
 
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
         function goBack() {
             window.location.href = "../index.html";
         }
 
-        function newloan() {
-            window.location.href = "2nd.html";
-        }
-        
-        function Student(){
+        function Student() {
             document.getElementById("formSection").style.display = "none";
             document.getElementById("form2nsSection").style.display = "block";
         }
-        function employee(){
-            window.location.href = "#";
+
+        function employee() {
+            window.location.href = "#"; // Change to the correct page
         }
-        function reloan(){
-            window.location.href = "4th.html";
+
+        function next(accountType) {
+            localStorage.setItem("Teacher's loan", accountType); // Store selected loan type
+            if (accountType === "newloan") {
+                window.location.href = "2nd.html";
+            } else {
+                window.location.href = "4th.html";
+            }
         }
     </script>
 
