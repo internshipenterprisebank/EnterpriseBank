@@ -137,30 +137,65 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <script>
-        function emplonext(){
-           
+        function emplonext() {
+            // Store data and generate the PDF
+            saveToLocalStorage();
             createPDF();
-            window.location.href= "PA_employ.html";
+            window.location.href = "PA_employ.html";
         }
-        function bussnext(){
-            // Instead of page redirect, directly generate the PDF
+    
+        function bussnext() {
+            // Store data and generate the PDF
+            saveToLocalStorage();
             createPDF();
-            window.location.href= "PA_buss.html";
+            window.location.href = "PA_buss.html";
         }
-        
+    
+        // Ensure data is stored in localStorage
+        function saveToLocalStorage() {
+            document.querySelectorAll("input, select").forEach(input => {
+                localStorage.setItem(input.id, input.value || "N/A");
+            });
+        }
+    
+        // Generate PDF with the data stored in localStorage
+        function createPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            let y = 40;
+    
+            // Get and display the stored values
+            let keys = ["email", "name", "age", "address", "sex", "maritalStatus", "incomeSource", 
+                        "businessName", "businessAddress", "employeeName", "employeeAddress"];
+            
+            keys.forEach(key => {
+                let value = localStorage.getItem(key) || "N/A";
+                doc.text(`${key.replace(/([A-Z])/g, " $1")}: ${value}`, 20, y);
+                y += 10;
+            });
+    
+            y += 20;
+            doc.text("Account Type", 20, y);
+            y += 10;
+    
+            let checkingAccount = localStorage.getItem("Checking_Account") || "Not Selected";
+            doc.text(`Account Type: ${checkingAccount} Checking`, 20, y);
+    
+            // Save the PDF with user's name or default name
+            doc.save(`${localStorage.getItem("name") || "Checking Account"}.pdf`);
+        }
+    
+        // Handle the selection of income source
         function toggleIncomeSection() {
             let incomeSource = document.getElementById("incomeSource").value;
             document.getElementById("businessSection").style.display = incomeSource === "Business" ? "block" : "none";
             document.getElementById("employeeSection").style.display = incomeSource === "Employee" ? "block" : "none";
         }
     
-        function showPersonalSection() {
-            document.getElementById("businessSection").style.display = "none";
-            document.getElementById("employeeSection").style.display = "none";
-            document.getElementById("personalSection").style.display = "block";
-        }
+        // When selecting an income source, show the corresponding section
+        document.getElementById("incomeSource").addEventListener("change", toggleIncomeSection);
     
-        // Listen for form submission and handle the data
+        // Handle form submission and transition between sections
         document.getElementById("personalForm").addEventListener("submit", function (event) {
             event.preventDefault();
             saveToLocalStorage();
@@ -190,42 +225,8 @@
             saveToLocalStorage();
             createPDF();  // Generate PDF after Employee Info
         });
-    
-        // Save data to localStorage
-        function saveToLocalStorage() {
-            document.querySelectorAll("input, select").forEach(input => {
-                localStorage.setItem(input.id, input.value || "N/A");
-            });
-        }
-    
-        // Generate PDF
-        function createPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-    
-            doc.text("Personal Checking Account", 50, 20);
-            let y = 40;
-    
-            let keys = ["email", "name", "age", "address", "sex", "maritalStatus", "incomeSource", 
-                        "businessName", "businessAddress", "employeeName", "employeeAddress"];
-    
-            keys.forEach(key => {
-                let value = localStorage.getItem(key) || "N/A";
-                doc.text(`${key.replace(/([A-Z])/g, " $1")}: ${value}`, 20, y);
-                y += 10;
-            });
-    
-            y += 20;
-            doc.text("Account Type", 20, y);
-            y += 10;
-    
-            let checkingAccount = localStorage.getItem("Checking_Account") || "Not Selected";
-            doc.text(`Account Type: ${checkingAccount} Checking`, 20, y);
-    
-            // Save the PDF with user's name or default name
-            doc.save(`${localStorage.getItem("name") || "Checking Account"}.pdf`);
-        }
     </script>
+    
     
 </body>
 </html>
