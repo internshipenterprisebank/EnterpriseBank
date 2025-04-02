@@ -127,7 +127,7 @@
         function generatePDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            const accountType = localStorage.getItem("TeachersLoan") || "Not specified";
+            const accountType = localStorage.getItem("Teacher's loan") || "Not specified";
     
             let content = [
                 "Teachers Loan Application",
