@@ -116,7 +116,7 @@
             <input type="text" id="businessAddress" required>
             <div class="buttons">
                 <button type="button" class="btn btn-back" onclick="showPersonalSection()">Back</button>
-                <button type="submit" class="btn btn-next" onclick="bussnext()">Next</button>
+                <button type="button" class="btn btn-next" onclick="bussnext()">Next</button>
             </div>
         </form>
     </div>
@@ -130,36 +130,42 @@
             <input type="text" id="employeeAddress" required>
             <div class="buttons">
                 <button type="button" class="btn btn-back" onclick="showPersonalSection()">Back</button>
-                <button type="submit" class="btn btn-next" onclick="emplonext()">Next</button>
+                <button type="button" class="btn btn-next" onclick="emplonext()">Next</button>
             </div>
         </form>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <script>
-
         function emplonext(){
-            window.location.href = "PA_employ.html";
+           
+            createPDF();
+            window.location.href= "PA_employ.html";
         }
         function bussnext(){
-            window.location.href = "PA_buss.html";
+            // Instead of page redirect, directly generate the PDF
+            createPDF();
+            window.location.href= "PA_buss.html";
         }
+        
         function toggleIncomeSection() {
             let incomeSource = document.getElementById("incomeSource").value;
             document.getElementById("businessSection").style.display = incomeSource === "Business" ? "block" : "none";
             document.getElementById("employeeSection").style.display = incomeSource === "Employee" ? "block" : "none";
         }
-
+    
         function showPersonalSection() {
             document.getElementById("businessSection").style.display = "none";
             document.getElementById("employeeSection").style.display = "none";
             document.getElementById("personalSection").style.display = "block";
         }
-
+    
+        // Listen for form submission and handle the data
         document.getElementById("personalForm").addEventListener("submit", function (event) {
             event.preventDefault();
             saveToLocalStorage();
             let incomeSource = localStorage.getItem("incomeSource");
-
+    
             if (incomeSource === "Business") {
                 document.getElementById("personalSection").style.display = "none";
                 document.getElementById("businessSection").style.display = "block";
@@ -167,53 +173,59 @@
                 document.getElementById("personalSection").style.display = "none";
                 document.getElementById("employeeSection").style.display = "block";
             } else {
-                createPDF();
+                createPDF();  // Generate PDF after Personal Info
             }
         });
-
+    
+        // Handle business form submission
         document.getElementById("businessForm").addEventListener("submit", function (event) {
             event.preventDefault();
             saveToLocalStorage();
-            createPDF();
+            createPDF();  // Generate PDF after Business Info
         });
-
+    
+        // Handle employee form submission
         document.getElementById("employeeForm").addEventListener("submit", function (event) {
             event.preventDefault();
             saveToLocalStorage();
-            createPDF();
+            createPDF();  // Generate PDF after Employee Info
         });
-
+    
+        // Save data to localStorage
         function saveToLocalStorage() {
             document.querySelectorAll("input, select").forEach(input => {
                 localStorage.setItem(input.id, input.value || "N/A");
             });
         }
-
+    
+        // Generate PDF
         function createPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    doc.text("Checking Account", 50, 20);
-    let y = 40;
-
-    let keys = ["email", "name", "age", "address", "sex", "maritalStatus", "incomeSource", 
-                "businessName", "businessAddress", "employeeName", "employeeAddress"];
-
-    keys.forEach(key => {
-        let value = localStorage.getItem(key) || "N/A";
-        doc.text(`${key.replace(/([A-Z])/g, " $1")}: ${value}`, 20, y);
-        y += 10;
-    });
-
-    y += 20;
-    doc.text("Account Type", 20, y);
-    y += 10;
-
-    let checkingAccount = localStorage.getItem("Checking_Account") || "Not Selected";
-    doc.text(`Account Type: ${checkingAccount} Checking`, 20, y);
-
-    doc.save(`${localStorage.getItem("name") || "Checking Account"}.pdf`);
-}
-</script>
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+    
+            doc.text("Personal Checking Account", 50, 20);
+            let y = 40;
+    
+            let keys = ["email", "name", "age", "address", "sex", "maritalStatus", "incomeSource", 
+                        "businessName", "businessAddress", "employeeName", "employeeAddress"];
+    
+            keys.forEach(key => {
+                let value = localStorage.getItem(key) || "N/A";
+                doc.text(`${key.replace(/([A-Z])/g, " $1")}: ${value}`, 20, y);
+                y += 10;
+            });
+    
+            y += 20;
+            doc.text("Account Type", 20, y);
+            y += 10;
+    
+            let checkingAccount = localStorage.getItem("Checking_Account") || "Not Selected";
+            doc.text(`Account Type: ${checkingAccount} Checking`, 20, y);
+    
+            // Save the PDF with user's name or default name
+            doc.save(`${localStorage.getItem("name") || "Checking Account"}.pdf`);
+        }
+    </script>
+    
 </body>
 </html>
