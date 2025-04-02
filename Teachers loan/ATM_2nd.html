@@ -137,7 +137,7 @@
     const accountType = localStorage.getItem("Teacher's loan") || "Not specified";
     
     doc.text("Teachers Loan Application", 10, 10);
-    doc.text("Account Type: Salary Loan", 10, 20); // Ensure it's on a separate line
+    doc.text("Account Type: ATM Loan", 10, 20); // Ensure it's on a separate line
     doc.text(`Loan Type: ${accountType}`, 10, 30); // Adjusted Y position to avoid overlap
     
     // Split the review content into multiple lines
