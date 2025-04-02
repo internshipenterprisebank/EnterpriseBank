@@ -133,11 +133,12 @@
     const doc = new jsPDF();
     let y = 20;
 
+    // Loan Information (Retrieve values from localStorage or other fields)
     doc.text("Loan Information", 20, y);
     y += 10;
-    doc.text(`Loan Purpose: ${document.getElementById("loanPurpose").value}`, 20, y);
+    doc.text(`Loan Purpose: ${localStorage.getItem("loanPurpose")}`, 20, y);
     y += 10;
-    doc.text(`Referred By: ${document.getElementById("referredBy").value}`, 20, y);
+    doc.text(`Referred By: ${localStorage.getItem("referredBy")}`, 20, y);
 
     y += 20;
     doc.text("Personal Information", 20, y);
@@ -169,10 +170,11 @@
 
     // Redirect to the next page after saving
     setTimeout(() => {
-        window.location.href = "submit.html";
+        window.location.href = "submit.html";  // Or any other redirection
     }, 1000);
 }
 
+// This function should now call generatePDF when the user clicks 'Next'
 
         
         </script>
