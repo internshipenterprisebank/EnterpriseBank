@@ -79,7 +79,15 @@
         
         <h1>Loan Information</h1>
         <label>Loan Amount Needed:</label><input type="text" id="loan_amount">
-        <label>Years to pay:</label><input type="text" id="loan_years">
+         <label>Years to pay:</label>
+            <select id="loan_years" required>
+                <option value="" disabled selected>Pick</option>
+                <option value="1 year">1 years</option>
+                <option value="2 year">2 years</option>
+                <option value="3 year">3 years</option>
+                <option value="4 year">1 years</option>
+                <option value="5 year">5 years</option>
+            </select>
         <label>Loan Purpose:</label><input type="text" id="loan_purpose">
         
         <div class="buttons">
